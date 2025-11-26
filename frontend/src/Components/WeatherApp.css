@@ -1,0 +1,182 @@
+/* === Global Styles === */
+body {
+    margin: 4rem;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #00417a, #00f2fe);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    
+}
+
+/* === Logout Button === */
+.logout-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+#logout-btn {
+    background-color: #cf0606;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#logout-btn:hover {
+    background-color: #cf7676;
+}
+
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 1.5fr 1fr; /* Left, Middle, Right */
+    gap: 20px;
+    
+}
+
+/*  Ranking Card  */
+.ranking-card {
+    background: linear-gradient(140deg, #032d52, #00f2fe);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.ranking-card h3 {
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.ranking-card ul {
+    list-style: none;
+    padding: 0;
+
+}
+
+.ranking-card li {
+    background: rgba(255, 255, 255, 0.2);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+  
+}
+
+/*  Weather Card  */
+.weather-card {
+    background: linear-gradient(to right, rgba(12, 30, 112, 0.3), rgba(255, 255, 255, 0.1));
+    padding: 25px;
+    border-radius: 18px;
+    backdrop-filter: blur(10px);
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+}
+
+.search-bar button {
+    padding: 12px 20px;
+    background-color: #391ac2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #000;
+}
+
+/* Weather */
+.weather-details {
+    text-align: center;
+}
+
+
+
+.weather-details h1 {
+    font-size: 46px;
+    margin: 10px 0;
+}
+
+.extra-info {
+
+    width: 100%;
+    bottom: 2rem;
+    display: flex;
+    column-gap: 2rem;
+    padding-top: 3rem;
+}
+
+.extra-info  > div{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.data-name{
+    font-size: 1.6rem;
+    color: #484569
+}
+
+.weather-data i{
+    font-size: 2rem;
+    color: #ffffff;
+    text-shadow: -0.3rem 0.3rem 0.5rem rgba(0,0,0,0.1);
+
+}
+
+/*  Score Card  */
+.score-card {
+    background: linear-gradient(140deg, #032d52, #00f2fe);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.score-card h3 {
+    margin-bottom: 10px;
+}
+
+.score-card p {
+    font-size: 18px;
+}
+
+/*  Mobile Responsive  */
+@media (max-width: 900px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ranking-card, .weather-card, .score-card {
+        margin-bottom: 20px;
+    }
+}
