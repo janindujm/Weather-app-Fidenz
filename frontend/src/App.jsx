@@ -1,12 +1,15 @@
-import WeatherApp from "./Components/WeatherApp"
-import "./Components/WeatherApp.css"
+import WeatherApp from "./Components/WeatherApp";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const App = () => {
-  return (
-    <div>
-      <WeatherApp />
-    </div>
-  )
+function App() {
+    const { logout } = useAuth0();
+
+    return (
+        <ProtectedRoute>
+            <WeatherApp logout={logout} />
+        </ProtectedRoute>
+    );
 }
 
-export default App
+export default App;

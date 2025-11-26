@@ -140,7 +140,7 @@ body {
 
 
 .weather-details h1 {
-    padding-top: 2rem;
+    padding-top: 1rem;
     font-size: 60px;
     margin: 10px 0;
 }
@@ -154,7 +154,7 @@ body {
     gap: 1rem;
     display: flex;
     column-gap: 2rem;
-    padding-top: 3rem;
+    padding-top: 0rem;
 }
 
 .extra-info  > div{
@@ -166,24 +166,24 @@ body {
     align-items: center;
     row-gap: 1.5rem;
     background-color: rgba(255, 255, 255, 0.2);
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 1rem;
     box-sizing: border-box;
 }
 
 .extra-info i {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #ffffff;
     text-shadow: -0.3rem 0.3rem 0.5rem rgba(0,0,0,0.1);
 }
 
 .extra-info .data{
-    font-size: 1.6rem;
+    font-size: 1rem;
     color: #484569
 }
 
 .data-name{
-    font-size: 1.6rem;
+    font-size: 1rem;
     color: #484569
 }
 

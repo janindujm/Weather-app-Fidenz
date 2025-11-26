@@ -152,6 +152,7 @@ app.get("/weather", async (req, res) => {
 
 
         console.log(`Comfort score for ${city}:`, score);
+        return res;
 
     } catch (err) {
         console.error("Backend Error:", err);

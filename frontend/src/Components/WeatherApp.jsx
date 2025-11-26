@@ -1,10 +1,16 @@
 import './WeatherApp.css';
 import { useEffect, useState } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const WeatherApp = () => {
+
+    const { logout } = useAuth0();
+
     const [rankedCities, setRankedCities] = useState([]);
     const [selectedCityWeather, setSelectedCityWeather] = useState(null);
+    const [location, setLocation] = useState('');
 
+    // Load ranked cities on first render
     useEffect(() => {
         fetch('http://localhost:5000/byid')
             .then(res => res.json())
@@ -12,7 +18,10 @@ const WeatherApp = () => {
             .catch(error => console.error('Error fetching ranked cities:', error));
     }, []);
 
+    // Fetch weather for a clicked city
     const handleCityClick = (cityName) => {
+        if (!cityName) return;
+
         fetch(`http://localhost:5000/weather?city=${cityName}`)
             .then(res => res.json())
             .then(data => {
@@ -26,7 +35,7 @@ const WeatherApp = () => {
         <div className="container">
 
             <div className="logout-section">
-                <button id="logout-btn">Logout</button>
+                <button id="logout-btn" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</button>
             </div>
 
             <div className="grid-layout">
@@ -39,16 +48,20 @@ const WeatherApp = () => {
                             <li
                                 key={index}
                                 onClick={() => handleCityClick(city.city)}
-                                style={{ cursor: 'pointer', fontWeight: selectedCityWeather && selectedCityWeather.name === city.city ? 'bold' : 'normal' }}
+                                style={{
+                                    cursor: 'pointer',
+                                    fontWeight:
+                                        selectedCityWeather?.name === city.city
+                                            ? 'bold'
+                                            : 'normal'
+                                }}
                             >
                                 {city.city}:{"\u00A0\u00A0\u00A0"}{city.score.toFixed(2)}
                             </li>
                         ))}
                     </ul>
                     <div className="refresh-button">
-                        <button
-                            onClick={() => window.location.reload()}
-                        >
+                        <button onClick={() => window.location.reload()}>
                             Refresh
                         </button>
                     </div>
@@ -57,18 +70,32 @@ const WeatherApp = () => {
                 {/* Weather Card */}
                 <div className="weather-card">
                     <div className="search-bar">
-                        <input type="text" id="search-city" placeholder="Enter city name..." />
-                        <button id="search-btn">Search</button>
+                        <input
+                            type="text"
+                            placeholder="Enter city name..."
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                        />
+                        <button id="search-btn" onClick={() => handleCityClick(location)}>
+                            Search
+                        </button>
                     </div>
 
                     <div className="weather-details">
-                        <h2 id="city-name">{selectedCityWeather ? selectedCityWeather.name : "City Name"}</h2>
+                        <h2 id="city-name">
+                            {selectedCityWeather?.name || "City Name"}
+                        </h2>
 
                         <h1 id="temperature">
-                            {selectedCityWeather ? `${selectedCityWeather.main.temp.toFixed(1)}°C` : "25°C"}
+                            {selectedCityWeather
+                                ? `${selectedCityWeather.main?.temp?.toFixed(1)}°C`
+                                : "25°C"}
                         </h1>
+
                         <p id="weather-description">
-                            {selectedCityWeather ? selectedCityWeather.weather[0].description : "Clear Sky"}
+                            {selectedCityWeather
+                                ? selectedCityWeather.weather?.[0]?.description
+                                : "Clear Sky"}
                         </p>
 
                         <div className="extra-info">
@@ -76,28 +103,39 @@ const WeatherApp = () => {
                                 <div className="data-name">Humidity</div>
                                 <i className="fa-solid fa-droplet"></i>
                                 <div className="data">
-                                    {selectedCityWeather ? `${selectedCityWeather.main.humidity}%` : "60%"}
+                                    {selectedCityWeather
+                                        ? `${selectedCityWeather.main?.humidity}%`
+                                        : "60%"}
                                 </div>
                             </div>
+
                             <div className="Wind">
                                 <div className="data-name">Wind</div>
                                 <i className="fa-solid fa-wind"></i>
                                 <div className="data">
-                                    {selectedCityWeather ? `${selectedCityWeather.wind.speed} m/s` : "10 km/h"}
+                                    {selectedCityWeather
+                                        ? `${selectedCityWeather.wind?.speed} m/s`
+                                        : "10 km/h"}
                                 </div>
                             </div>
+
                             <div className="Visibility">
                                 <div className="data-name">Visibility</div>
                                 <i className="fa-solid fa-eye"></i>
                                 <div className="data">
-                                    {selectedCityWeather ? `${selectedCityWeather.visibility} m` : "Good"}
+                                    {selectedCityWeather
+                                        ? `${selectedCityWeather.visibility} m`
+                                        : "Good"}
                                 </div>
                             </div>
+
                             <div className="Cloudiness">
                                 <div className="data-name">Cloudiness</div>
                                 <i className="fa-solid fa-cloud"></i>
                                 <div className="data">
-                                    {selectedCityWeather ? `${selectedCityWeather.clouds.all}%` : "Cloudiness"}
+                                    {selectedCityWeather
+                                        ? `${selectedCityWeather.clouds?.all}%`
+                                        : "Cloudiness"}
                                 </div>
                             </div>
                         </div>
@@ -109,9 +147,12 @@ const WeatherApp = () => {
                     <h3>Comfort Score</h3>
                     <div className="circle">
                         <span id="comfort-score-text">
-                            {selectedCityWeather ? `${selectedCityWeather.comfortScore.toFixed(2)}%` : "85%"}
+                            {selectedCityWeather
+                                ? `${selectedCityWeather.comfortScore?.toFixed(2)}%`
+                                : "85%"}
                         </span>
                     </div>
+
                     <p id="comfort-comment">
                         {selectedCityWeather
                             ? selectedCityWeather.comfortScore > 80
@@ -124,7 +165,6 @@ const WeatherApp = () => {
                 </div>
 
             </div>
-
         </div>
     );
 };
