@@ -31,6 +31,13 @@ const WeatherApp = () => {
             .catch(err => console.error("Error fetching city weather:", err));
     };
 
+    const refreshRankedCities = () => {
+        fetch('http://localhost:5000/byid')
+            .then(res => res.json())
+            .then(data => setRankedCities(data))
+            .catch(error => console.error('Error fetching ranked cities:', error));
+    }
+
     return (
         <div className="container">
 
@@ -61,7 +68,7 @@ const WeatherApp = () => {
                         ))}
                     </ul>
                     <div className="refresh-button">
-                        <button onClick={() => window.location.reload()}>
+                        <button onClick={() => refreshRankedCities()}>
                             Refresh
                         </button>
                     </div>

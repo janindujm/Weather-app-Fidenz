@@ -1,7 +1,7 @@
 const express = require("express");
-
 const cors = require("cors");
 const cities_file = require("./cities.json");
+const {getCachedData,setCachedData,getLastCacheStatus} = require("./cache");
 
 require("dotenv").config();
 
@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 
 const API_KEY = process.env.WEATHER_API_KEY;
+
+
 
 // Helper function to calculate comfort score
 function comfortScore(temp, humidity, windSpeed, visibility, cloudiness, rain ) {
@@ -123,6 +125,15 @@ app.get("/weather", async (req, res) => {
 
     if (!city) return res.status(400).json({ error: "City is required" });
 
+    //Caching part
+    const cacheKey = city.toLowerCase();
+    const cached = await getCachedData(cacheKey);
+    if (cached) {
+        console.log(`Cache ${getLastCacheStatus()} for city: ${city}`);
+        return res.json(cached);
+    }
+
+
     try {
         
         const data = await getWeatherByCityName(city);
@@ -140,19 +151,21 @@ app.get("/weather", async (req, res) => {
         const score = comfortScore(temp, humidity, windSpeed, visibility, cloudiness, rain);
 
         // Send weather + comfort score
-        res.json({
+        const responseData = {
             weather: data.weather,
             main: data.main,
             wind: data.wind,
             clouds: data.clouds,
-            visibility: data.visibility,
+            visibility: visibility,
             name: data.name,
             comfortScore: score
-        });
+        };
 
 
         console.log(`Comfort score for ${city}:`, score);
-        return res;
+        await setCachedData(cacheKey, responseData); 
+        console.log(`Cache ${getLastCacheStatus()} for city: ${city}`)
+        return res.json(responseData);
 
     } catch (err) {
         console.error("Backend Error:", err);
@@ -161,9 +174,19 @@ app.get("/weather", async (req, res) => {
 });
 
 app.get("/byid", async (req, res) => {
+
+    const cachekey = `citylist_rank`;
+    const cached =  await getCachedData (cachekey);
+    if(cached) {
+        console.log(`Cache ${getLastCacheStatus()} for city list`);
+        return res.json(cached);
+    }
+
     const citydict = await getcitiesid();
+    await setCachedData(cachekey, citydict); // cache for 30 minutes
     res.json(citydict);
     console.log(citydict);
+    console.log(`Cache ${getLastCacheStatus()} for city list`)
     
 });
 
