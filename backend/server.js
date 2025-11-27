@@ -22,7 +22,7 @@ function comfortScore(temp, humidity, windSpeed, visibility, cloudiness, rain ) 
     else if ((temp > 15 && temp < 18) || (temp > 28 && temp < 30)) scoreTemp = 55;
     else if ((temp > 13 && temp < 15) || (temp > 30 && temp < 33)) scoreTemp = 25;
     else if ((temp > 9 && temp < 13) || (temp > 33 && temp < 35)) scoreTemp = 10;
-    else scoreTemp = 0;
+    else scoreTemp = 1;
     
 
     // Humidity (0–100 raw, later weighted to 20%)
