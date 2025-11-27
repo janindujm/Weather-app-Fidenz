@@ -16,7 +16,7 @@ A smart weather application that fetches real-time weather data and calculates a
 
 - 🌡️ **Real-time Weather Data** - Fetches live data from OpenWeatherMap API
 - 📊 **Comfort Scoring** - Intelligently calculates weather comfort (0-100 scale)
-- 🚀 **Redis Caching** - Speeds up responses and reduces API calls
+- 🚀 **Redis Caching** - Speeds up responses and reduces API calls (Cache HIT / MISS logging)
 - 🏙️ **Multi-city Comparison** - Compare and rank cities by comfort score
 - 🐳 **Fully Dockerized** - Easy deployment with Docker Compose
 - 📱 **Modern UI** - Built with React and Vite for a smooth experience
@@ -192,7 +192,7 @@ REDIS_PORT=6379
 PORT=5000
 
 # Cache Settings (optional)
-CACHE_EXPIRATION=3600  # 1 hour in seconds
+CACHE_EXPIRATION=300  # 5 minutes
 ```
 
 ### Frontend `.env`
@@ -234,8 +234,8 @@ The `docker-compose.yml` includes:
 ## 📊 Caching Details
 
 The app uses Redis to cache:
-- **Individual city weather** - Cached for 1 hour
-- **Ranked city lists** - Cached for 1 hour
+- **Individual city weather** - Cached for 5 Minutes
+- **Ranked city lists** - Cached for 5 Minutes
 
 Benefits:
 - ⚡ Faster response times
@@ -244,31 +244,8 @@ Benefits:
 
 Cache logs show `HIT` or `MISS` for debugging.
 
-## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
-## 📄 License
 
-This project is licensed under the MIT License.
-
-## 🙏 Acknowledgments
-
-- Weather data provided by [OpenWeatherMap](https://openweathermap.org/)
-- Icons from [Weather Icons](https://erikflowers.github.io/weather-icons/)
-
-## 📞 Support
-
-For issues or questions:
-- Create an issue on GitHub
-- Email: support@yourapp.com
-
----
-
-Made with ☕ by [Your Name]
+Made with ☕ by Janindu
